@@ -1,0 +1,12 @@
+Special thanks to:
+
+Volnues - Spriting (background, printer, categories, rarities)
+NOICEMEMES - Spriting (physical element)
+RexmecK - Compatibility with Rexmeck's Item Editor Pro
+SilverSokolova - Improving object categories
+Mehgugs - Fixing missing image crash
+GTG3000 - Removing legacy code
+FezzedOne - Adding item asset preprocessing to get rid of the need for extra add-ons just to add mod support
+
+And everyone who has reported issues or suggested new features and improvements!
+If your name is missing from the list, let me know in a PR/Issue.

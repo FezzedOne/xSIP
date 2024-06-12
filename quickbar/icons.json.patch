@@ -1,0 +1,12 @@
+[
+  {
+    "op": "add",
+    "path": "/items/silverfeelin:spawnableItemPack",
+    "value": {
+      "label": "xSIP",
+      "icon": "/interface/sip/iconSmall.png",
+      "weight": 0,
+      "action": [ "exec", "/quickbar/spawnableItemPackLoader.lua" ]
+    }
+  }
+]

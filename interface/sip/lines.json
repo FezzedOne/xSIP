@@ -1,0 +1,23 @@
+{
+  // The '%s' symbols should never be added or removed.
+
+  "author" : "Silverfeelin and FezzedOne",
+  "title" : "xSIP",
+  "subtitle" : "Spawn anything, for free!",
+
+  "viewCategories": "View\nCategories",
+  "showItems": "Show All\nItems",
+  "showObjects": "Show All\nObjects",
+
+  "descriptionMissing" : "No description could be found for this item.",
+  "itemDetails" : "Select an item to view its details.",
+  "noSelection" : "No item selected.",
+
+  "copiedItem" : "Copied Item",
+  "copy": "You can get more copies of this item by printing more below.",
+
+  "specifications": "Specifications",
+  "level" : "Level",
+  "element" : "Element",
+  "color" : "Colour"
+}
