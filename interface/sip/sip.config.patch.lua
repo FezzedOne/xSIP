@@ -24,7 +24,7 @@ function patch(config, _)
 
     local detectedClient = (function()
         if xsb then
-            return "(xSB-2 v" .. xsb.version() .. ")"
+            return "(xClient v" .. xsb.version() .. ")"
         else
             return "(OpenStarbound)"
         end

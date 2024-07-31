@@ -93,7 +93,7 @@ local itemExtensions = {
 local xSipItems = jarray({})
 
 if xsb then
-    sb.logInfo("[xSIP] xSB-2 v" .. xsb.version() .. " detected.")
+    sb.logInfo("[xSIP] xClient v" .. xsb.version() .. " detected.")
 else
     sb.logInfo("[xSIP] OpenStarbound or similar detected.")
 end
