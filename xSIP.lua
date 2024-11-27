@@ -91,7 +91,7 @@ local itemExtensions = {
     "codex", -- Added codices.
 }
 
-local xSipItems = jarray{}
+local xSipItems = jarray({})
 
 if xsb then
     sb.logInfo("[xSIP] xClient v" .. xsb.version() .. " detected.")
@@ -110,20 +110,28 @@ for _, ext in ipairs(itemExtensions) do
         then
             goto continue
         end
-        itemJson.itemConfig = type(itemJson.itemConfig) == "table" and itemJson.itemConfig or jobject{}
+        itemJson.itemConfig = type(itemJson.itemConfig) == "table" and itemJson.itemConfig or jobject({})
         local directory, fileName = splitPath(path)
         local isCodex = ext == "codex"
         local nameKey = ext == "object" and "objectName" or "itemName"
-        local itemConfig = jobject{
+        local icon = type(itemJson.inventoryIcon) == "string" and itemJson.inventoryIcon
+            or (
+                type(itemJson.inventoryIcon) == "table"
+                    and itemJson.inventoryIcon[1]
+                    and itemJson.inventoryIcon[1].image
+                or (itemJson.icon or nil)
+            )
+        local category = isCodex and itemJson.itemConfig.category or itemJson.category
+        local itemConfig = jobject({
             path = directory,
             fileName = fileName,
             name = isCodex and (itemJson.id .. "-codex") or itemJson[nameKey] or "perfectlygenericitem",
             rarity = checkRarity(isCodex and itemConfig.rarity or itemJson.rarity),
             shortdescription = (itemJson.shortDescription or itemJson.shortdescription or itemJson.title) or "",
-            icon = type(itemJson.inventoryIcon) == "string" and itemJson.inventoryIcon or "/assetmissing.png",
+            icon = (icon or "/assetmissing.png"):gsub("<directives>", ""),
             race = itemJson.race or itemJson.species or "generic",
-            category = (isCodex and itemJson.itemConfig.category or itemJson.category) or (isCodex and "codex" or "junk"),
-        }
+            category = (((not icon) and not category) and "other" or category) or (isCodex and "codex" or ext),
+        })
         if ext == "head" or ext == "chest" or ext == "legs" or ext == "back" then
             itemConfig.directives = parseColourOptions(itemJson.colorOptions, path)
         end
