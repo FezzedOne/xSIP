@@ -88,6 +88,7 @@ local itemExtensions = {
     "unlock",
     "activeitem",
     "augment",
+    "codex", -- Added codices.
 }
 
 local xSipItems = jarray({})
