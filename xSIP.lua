@@ -91,7 +91,7 @@ local itemExtensions = {
     "codex", -- Added codices.
 }
 
-local xSipItems = jarray({})
+local xSipItems = jarray{}
 
 if xsb then
     sb.logInfo("[xSIP] xClient v" .. xsb.version() .. " detected.")
@@ -110,17 +110,19 @@ for _, ext in ipairs(itemExtensions) do
         then
             goto continue
         end
+        itemJson.itemConfig = type(itemJson.itemConfig) == "table" and itemJson.itemConfig or jobject{}
         local directory, fileName = splitPath(path)
+        local isCodex = ext == "codex"
         local nameKey = ext == "object" and "objectName" or "itemName"
         local itemConfig = jobject{
             path = directory,
             fileName = fileName,
-            name = itemJson[nameKey] or "perfectlygenericitem",
-            rarity = checkRarity(itemJson.rarity),
-            shortdescription = (itemJson.shortDescription or itemJson.shortdescription) or "",
+            name = isCodex and (itemJson.id .. "-codex") or itemJson[nameKey] or "perfectlygenericitem",
+            rarity = checkRarity(isCodex and itemConfig.rarity or itemJson.rarity),
+            shortdescription = (itemJson.shortDescription or itemJson.shortdescription or itemJson.title) or "",
             icon = type(itemJson.inventoryIcon) == "string" and itemJson.inventoryIcon or "/assetmissing.png",
-            race = itemJson.race or "generic",
-            category = itemJson.category or "junk",
+            race = itemJson.race or itemJson.species or "generic",
+            category = (isCodex and itemJson.itemConfig.category or itemJson.category) or (isCodex and "codex" or "junk"),
         }
         if ext == "head" or ext == "chest" or ext == "legs" or ext == "back" then
             itemConfig.directives = parseColourOptions(itemJson.colorOptions, path)
@@ -129,6 +131,14 @@ for _, ext in ipairs(itemExtensions) do
         ::continue::
     end
 end
+
+table.sort(xSipItems, function(a, b)
+    a = a.shortdescription:gsub("(%^.-%;)", ""):gsub(" ", "")
+    a = a == "" and a.name or a
+    b = b.shortdescription:gsub("(%^.-%;)", ""):gsub(" ", "")
+    b = b == "" and b.name or b
+    return a < b
+end)
 
 sb.logInfo("[xSIP] Adding all items...", ext)
 
