@@ -126,7 +126,7 @@ for _, ext in ipairs(itemExtensions) do
             path = directory,
             fileName = fileName,
             name = isCodex and (itemJson.id .. "-codex") or itemJson[nameKey] or "perfectlygenericitem",
-            rarity = checkRarity(isCodex and itemConfig.rarity or itemJson.rarity),
+            rarity = checkRarity(isCodex and itemJson.itemConfig.rarity or itemJson.rarity),
             shortdescription = (itemJson.shortDescription or itemJson.shortdescription or itemJson.title) or "",
             icon = (icon or "/assetmissing.png"):gsub("<directives>", ""),
             race = itemJson.race or itemJson.species or "generic",
