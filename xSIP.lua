@@ -103,7 +103,16 @@ for _, ext in ipairs(itemExtensions) do
     local itemPaths = assets.byExtension(ext)
     sb.logInfo("[xSIP] Processing item assets with extension '.%s'...", ext)
     for _, path in ipairs(itemPaths) do
-        local itemJson = assets.json(path)
+        local status, itemJsonOrError = pcall(assets.json, path)
+        local itemJson = jobject{}
+        if not status then
+            local errorMessage = itemJsonOrError
+            sb.logError("[xSIP] Could not process item at path '%s' due to error, skipping.\n  Error: %s",
+                path, errorMessage)
+            goto continue
+        else
+            itemJson = itemJsonOrError
+        end
         if -- Ignore virtual «items» from Betabound that get converted to actual items when spawned.
             itemJson.builder == "/items/buildscripts/starbound/convert.lua"
             or itemJson.builder == "/items/buildscripts/starbound/convert3.lua"
