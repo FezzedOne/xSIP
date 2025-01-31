@@ -52,7 +52,13 @@ function sip.callback.selectItem()
   sip.item = sip.getSelectedItem()
 
   local config
-  if sip.item then config = root.itemConfig(sip.item.name).config else return end
+  if sip.item then
+    local itemConfig = root.itemConfig(sip.item.name)
+    if not itemConfig then return end
+    config = itemConfig.config
+  else 
+    return 
+  end
 
   -- Hide category overlay
   sip.changingCategory = false
