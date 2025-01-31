@@ -52,7 +52,7 @@ function sip.callback.selectItem()
   sip.item = sip.getSelectedItem()
 
   local config
-  if sip.item then
+  if sip.item and sip.item.name then
     local itemConfig = root.itemConfig(sip.item.name)
     if not itemConfig then return end
     config = itemConfig.config
