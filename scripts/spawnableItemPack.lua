@@ -122,13 +122,16 @@ end
 function sip.loadModItems(itemList)
   itemList = itemList or {}
   for _,modFile in ipairs(root.assetJson("/sipMods/load.config")) do
+    if type(modFile) ~= "string" then goto nextItemList end
     local path = modFile:find("/") and modFile or ("/sipMods/" .. modFile)
+    if path:sub(1, 1) ~= "/" then path = "/" .. path end
     local items = root.assetJson(path)
     if #items > 0 then
       for i,v in ipairs(items) do
         table.insert(itemList, v)
       end
     end
+    ::nextItemList::
   end
 
   return itemList
